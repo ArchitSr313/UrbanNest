@@ -1,0 +1,5 @@
+                                                    DB Models
+Model 1 : Listing - place (apartment, house ,villa , hotel, flat)
+*schema
+title, description, image(Url, link), price, location , history
+-export this model
