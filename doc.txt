@@ -1,0 +1,65 @@
+                                                    Major Project
+- Phase 1
+-- create folder major project
+-- initialize package.json
+-- create app.js
+
+** setup backend (app.js)
+-- require express, mongoose, ejs
+-- create and connect to database
+-- create REST API's for CRUD Operations
+-- create models folder -> add models.js files in it so that it can be used in app.js to create models
+-- it this file we define our schema and model.
+-- export this model
+-- require this model in app.js
+
+** adding sample data in database
+-- create init folder to initialize database with sample database
+ --add data.js file in it and add sample data in it
+ --this folder can also be used if clear our database and want to reinitialize it with sample data
+ --add another file index.js
+ --this file is used to insert sample data into the database
+ --so it needs mongoose to connect to database, data.js file where sample data is present, listing.js to access collection
+ --require mongoose, data.js, listing.js in it;
+ --create database connection
+ --now add sample data in the database
+ --now run this file
+
+**creating routes
+-- create first route for /listings which shows all listings (index.ejs)
+  --get   /listings
+-- read:show route
+  --get   /listings/:id  shows all data of a listing
+-- new and create route
+  --get   /listings/new  -> form -> submit
+                                        |
+  --post  /listings                   <-|
+
+-- edit and update route
+  --get   /listings/:id/edit  -> form -> submit
+                                        |
+  --put  /listings/:id                <-|
+
+-- delete route
+  --delete  /listings/:id        to delete a listing
+
+**creating styling
+-- install ejs-mate
+   --create layouts folder in views directory
+   --create boilerplate.ejs file to write common code for every file
+   --write section that are not common as <%-body%>
+   --removing common code from other files and add this file as <%layout(/layouts/boilerplate)%>
+   --now for adding or changing things that are common to every file can be done in this file only
+--create public folder 
+ --create css folder in it 
+  --create style.css file in css folder
+  --link this file to boilerplate.ejs
+--create includes folder in views folder
+ --here various sections are added like navbar.ejs , footer.ejs to improve modularity of code
+ --create navbar.ejs file and paste code of navbar from bootstrap in this file
+ --include this file in other files <%- include("../includes/navbar.ejs")%>
+ --create footer.ejs to add footer to every page and add styling to it
+ --include this file in boilerplate
+
+--using bootstrap for styling
+ --copy css and js links to add it to boilerplate.ejs from bootstrap website
