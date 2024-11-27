@@ -63,3 +63,9 @@
 
 --using bootstrap for styling
  --copy css and js links to add it to boilerplate.ejs from bootstrap website
+
+--using bootstrap validations in forms
+ --adding novalide to turnoff default browser validations
+ --add class needs-validation in form to use bootstrap validations
+ --now it will display bootstrap validation messages or ui's
+ --add invalid-feedback & valid-feedback classes to display custom messages for valid or invalid inputs
