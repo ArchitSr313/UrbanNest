@@ -69,3 +69,14 @@
  --add class needs-validation in form to use bootstrap validations
  --now it will display bootstrap validation messages or ui's
  --add invalid-feedback & valid-feedback classes to display custom messages for valid or invalid inputs
+
+-- backend error handling
+ --added utils(utility) folder where all error handling files , wrapAsync files, and other extra files are created.
+ --created wrapAsync file in utils folder (wrapAsync is a function to use try catch block better)
+ --export this function and require it in app.js
+ --use this function in async routes to handle backend errors
+ --added ExpressError.js file in utils to make custom error class 
+ --they will throw custom errors
+ --export this class
+ --require the class in app.js
+-- created error.ejs page in listings to serve error page on encountering error
