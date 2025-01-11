@@ -80,3 +80,50 @@
  --export this class
  --require the class in app.js
 -- created error.ejs page in listings to serve error page on encountering error
+
+
+-- creating Reviews Model
+ -- it has comment (string), rating(1 to 5 - number), createdat(date,time)
+ -- make reviews file in models folder and created reviews schema with above attributes
+ -- create and export the model of reviews schema
+ -- since we want to add reviws for individual listings, so we have to add them in listing schema
+ -- now each listing can have reviews section
+ -- since a listing can have many reviews so it has 1 to n  or one to many relationship with reviews
+ -- require reviews file in listings file
+ -- add review attribute in listing, set review with array
+ -- it stores id of every review
+ -- set it type to Schema.Types.ObjectId and ref to "Review"
+
+--creating reviews section and adding functionalities
+1...
+ -- create review section in show.ejs as a form
+ -- it is bcz user can give reviews to specific listings directly from their listing page
+2... Submitting the form
+ -- adding review to database
+ -- POST   /listings/:id/reviews
+ -- here id is of listing  , each listing has multiple reviews
+ -- require review schema in app.js
+ -- create POST route for reviews in app.js
+ -- here we creating only post route for reviews because we only access reviews in listing
+ -- first find listing using id in params, then store new review by accessing through req.body.review
+ -- push the review in the listing array, then save new review then save listing
+
+3... validations
+ (a)Client Side Validation
+ (b)Server side validation
+  -- create joi schema for reviews form
+  -- create schema validate function for joi schema in app.js
+  -- pass this function as a middleware to app.post method for reviews
+  -*- it is important to do above things so we can validate the body coming in request field
+
+4... show reviews on listing page
+  -- populate the listing in get route of listing/:id with reviews
+  -- add reviews section in show page and display all reviews in it
+
+5... styling reviews
+  -- style the reviews section with bootstrap card class
+
+6... deleting reviews
+7... handling delete listing
+  -- Here we are adding delete listing middleware in listing.js file
+  -- if we delete a listing the reviews related to it, is also deleted
