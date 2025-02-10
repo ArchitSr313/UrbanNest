@@ -8,6 +8,7 @@ const wrapAsync=require("./utils/wrapAsync.js");
 const ExpressError=require("./utils/ExpressError.js");
 const listings=require("./routes/listings.js");   //listings routes
 const reviews = require("./routes/reviews.js");   //reviews routes
+const session = require("express-session");       //express sessions
 
 app.set("view engine","ejs");
 app.set("views",path.join(__dirname,"views"));
@@ -34,6 +35,18 @@ app.get("/",(req,res)=>{
     res.send("work in progress");
 });
 
+const sessionOptions = {
+    secret : "this_is_secret_key",
+    resave : false,
+    saveUninitialized : true,
+    cookie : {
+        expires : Date.now() + 5*24*60*60*1000,
+        maxAge : 5*24*60*60*1000,
+        httpOnly : true,
+    },
+};
+
+app.use(session(sessionOptions));
 
 app.use("/listings",listings);
 app.use("/listings/:id/reviews", reviews);
