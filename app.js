@@ -6,9 +6,14 @@ const methodOverride=require("method-override");
 const ejsMate=require("ejs-mate");            //this package allows us to use common code in different pages
 const wrapAsync=require("./utils/wrapAsync.js");
 const ExpressError=require("./utils/ExpressError.js");
-const listings=require("./routes/listings.js");   //listings routes
-const reviews = require("./routes/reviews.js");   //reviews routes
+const listingRouter=require("./routes/listings.js");   //listings routes
+const reviewRouter = require("./routes/reviews.js");   //reviews routes
+const userRouter = require("./routes/user.js");        //user routes
 const session = require("express-session");       //express sessions
+const flash = require("connect-flash");           //connect flash for flash messages
+const passport = require("passport");
+const LocalStrategy = require("passport-local");
+const User = require("./models/user.js");
 
 app.set("view engine","ejs");
 app.set("views",path.join(__dirname,"views"));
@@ -47,9 +52,28 @@ const sessionOptions = {
 };
 
 app.use(session(sessionOptions));
+app.use(flash());
 
-app.use("/listings",listings);
-app.use("/listings/:id/reviews", reviews);
+// authentication and authorization using passport
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+//middlware for for res.locals
+app.use((req,res,next)=>{
+    res.locals.successMsg = req.flash("success");
+    res.locals.errorMsg = req.flash("error");
+
+    // console.log(successMsg);
+    next();
+});
+
+app.use("/listings",listingRouter);
+app.use("/listings/:id/reviews", reviewRouter);
+app.use("/user", userRouter);
 
 
 //middle ware for handling backend errors

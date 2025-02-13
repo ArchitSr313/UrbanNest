@@ -1,0 +1,26 @@
+<% layout("/layouts/boilerplate") %>
+<body>
+    <div class="row offset-2 mt-3">
+        <div class="col col-8">
+            <h3>Login to UrbanNest</h3>
+            <form method="post" action="/user/login" novalidate class="needs-validation">
+                <div class="mb-3">
+                    <label for="username" class="form-label mt-4">Username</label>
+                    <input name="username" 
+                    id="username" 
+                    type="text"  
+                    class="form-control" 
+                    required>
+
+                    <label for="password" class="form-label mt-4">Password</label>
+                    <input name="password"
+                    id = "password" 
+                    type="password"  
+                    class="form-control" 
+                    required>
+                </div>
+                <button class="btn btn-success">Login</button>
+            </form>
+        </div>
+    </div>
+</body>
