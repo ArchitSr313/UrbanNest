@@ -2,22 +2,7 @@ const express=require("express");
 const router=express.Router();
 const wrapAsync=require("../utils/wrapAsync.js");
 const Listing=require("../models/listing.js");
-const {listingSchema}=require("../schema.js");
-const {isLoggedIn} = require("../middleware.js");
-
-//validate schema using joi
-//implementing it using a seprate function instead of write it in every route we pass this function as middleware 
-// where schema validation is needed this function is passed as middleware
-const validateListing=(req,res,next)=>{
-    let {error}=listingSchema.validate(req.body);
-    if(error){
-        let errMsg=error.details.map((el)=> el.message).join(",");
-        // throw new ExpressError(400,error);
-        throw new ExpressError(400,errMsg);
-    }else{
-        next();
-    }
-};
+const {isLoggedIn, isOwner, validateListing} = require("../middleware.js");
 
 //index route
 router.get("/",wrapAsync(async (req,res)=>{
@@ -33,7 +18,8 @@ router.get("/new",isLoggedIn,(req,res)=>{
 //show route
 router.get("/:id",wrapAsync(async (req,res)=>{
     let {id}=req.params;
-    const listing=await Listing.findById(id).populate("reviews").populate("owner");
+    const listing=await Listing.findById(id)
+    .populate({path:"reviews", populate:{path:"author"},}).populate("owner");
 
     // flashes message on screen if listing is not found
     if(!listing){
@@ -78,7 +64,7 @@ router.post("/", isLoggedIn, validateListing, wrapAsync(async (req,res,next)=>{
 }));
 
 //edit route
-router.get("/:id/edit", isLoggedIn, wrapAsync(async (req,res)=>{
+router.get("/:id/edit", isLoggedIn, isOwner, wrapAsync(async (req,res)=>{
     let {id}=req.params;
     const listing=await Listing.findById(id);
 
@@ -92,7 +78,7 @@ router.get("/:id/edit", isLoggedIn, wrapAsync(async (req,res)=>{
 }));
 
 //update route
-router.put("/:id",validateListing, wrapAsync(async (req,res)=>{
+router.put("/:id",validateListing, isOwner, wrapAsync(async (req,res)=>{
     let {id}=req.params;
     // if(!req.body.listing){
     //     throw new ExpressError(400,"Invalid Data");
@@ -103,7 +89,7 @@ router.put("/:id",validateListing, wrapAsync(async (req,res)=>{
 }));
 
 //delete route
-router.delete("/:id", isLoggedIn, wrapAsync(async (req,res)=>{
+router.delete("/:id", isLoggedIn, isOwner, wrapAsync(async (req,res)=>{
     let {id}=req.params;
     let deletedListing= await Listing.findByIdAndDelete(id);
     console.log(deletedListing);
