@@ -20,6 +20,7 @@ body{
 .nav-icon{
     color: #fe424d;
     font-size: 2rem !important;
+    text-decoration: none;
 }
 /* navlink */
 .nav-link{

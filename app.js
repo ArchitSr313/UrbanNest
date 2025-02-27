@@ -1,3 +1,7 @@
+if(process.env.NODE_ENV!="production"){
+    require("dotenv").config();
+}
+
 const express=require("express");
 const app=express();
 const mongoose=require("mongoose");
@@ -36,9 +40,9 @@ async function main() {
 }
 
 
-app.get("/",(req,res)=>{
-    res.send("work in progress");
-});
+// app.get("/",(req,res)=>{
+//     res.send("work in progress");
+// });
 
 const sessionOptions = {
     secret : "this_is_secret_key",
