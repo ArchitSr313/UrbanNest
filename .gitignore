@@ -1,4 +1,5 @@
 node_modules/
 temp/
 doc.txt
+db.txt
 .env
